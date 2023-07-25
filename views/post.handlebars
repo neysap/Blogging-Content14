@@ -1,0 +1,23 @@
+{{> navbar}}
+
+<div>
+  <h1>{{post.title}}</h1>
+  <p>{{post.content}}</p>
+  <p>Posted by: {{post.user.username}}</p>
+</div>
+
+<h2>Comments</h2>
+
+{{#each comments}}
+  <div>
+    <p>{{this.comment_text}}</p>
+    <p>Comment by: {{this.user.username}}</p>
+  </div>
+{{/each}}
+
+{{#if loggedIn}}
+  <form action="/comment" method="POST">
+    <textarea name="comment_text" placeholder="Leave a comment..." required></textarea>
+    <button type="submit">Submit Comment</button>
+  </form>
+{{/if}}
