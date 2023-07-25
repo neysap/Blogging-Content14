@@ -4,6 +4,7 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const sequelize = require('./config/connection');
 const userController = require('./controllers/userController');
+const blogController = require('./controllers/blogController');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -34,10 +35,20 @@ app.use((req, res, next) => {
 // User Authentication Routes
 app.use('/api/users', userController);
 
+// Blog Post and Comment Routes
+app.use('/api/blog', blogController);
+
 // Test the server
-app.get('/', (req, res) => {
-  const posts = []; // Replace this with the logic to fetch posts from the database
-  res.render('homepage', { loggedIn: req.session.logged_in, username: req.session.username, posts });
+app.get('/', async (req, res) => {
+  try {
+    const posts = await Post.findAll({
+      include: [{ model: User, attributes: ['username'] }],
+      order: [['createdAt', 'DESC']],
+    });
+    res.render('homepage', { loggedIn: req.session.logged_in, username: req.session.username, posts });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 
