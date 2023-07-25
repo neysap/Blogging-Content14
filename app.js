@@ -7,7 +7,7 @@ const userController = require('./controllers/userController');
 const blogController = require('./controllers/blogController');
 const dashboardController = require('./controllers/dashboardController');
 const singlePostController = require('./controllers/singlePostcontroller');
-const { Post, User } = require('./models'); // Add the appropriate require statement for your Post and User models
+const { User, Post } = require('./models');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
