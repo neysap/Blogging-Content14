@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars');
 const sequelize = require('./config/connection');
 const userController = require('./controllers/userController');
 const blogController = require('./controllers/blogController');
+const dashboardController = require('./controllers/dashboardController');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -37,6 +38,9 @@ app.use('/api/users', userController);
 
 // Blog Post and Comment Routes
 app.use('/api/blog', blogController);
+
+// Dashboard Routes
+app.use('/api/dashboard', dashboardController);
 
 // Test the server
 app.get('/', async (req, res) => {
