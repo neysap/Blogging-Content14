@@ -21,6 +21,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Set up the session with idle session timeout
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 1000 * 60 * 15 }, // Set the session to expire after 15 minutes of inactivity
+}));
+
 // Set up the session
 app.use(session({
   secret: process.env.SESSION_SECRET,
