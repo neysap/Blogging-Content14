@@ -3,6 +3,7 @@ const session = require('express-session');
 const path = require('path');
 const exphbs = require('express-handlebars');
 const sequelize = require('./config/connection');
+const userController = require('./controllers/userController');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -29,6 +30,9 @@ app.use((req, res, next) => {
   res.locals.username = req.session.username;
   next();
 });
+
+// User Authentication Routes
+app.use('/api/users', userController);
 
 // Test the server
 app.get('/', (req, res) => {
