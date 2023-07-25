@@ -1,0 +1,11 @@
+{{> navbar}}
+
+<h1>Delete Post</h1>
+
+<p>Are you sure you want to delete this post?</p>
+<p>Title: {{post.title}}</p>
+<p>Content: {{post.content}}</p>
+
+<form action="/api/blog/post/{{post.id}}" method="DELETE">
+  <button type="submit">Delete Post</button>
+</form>

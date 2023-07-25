@@ -6,6 +6,8 @@ const sequelize = require('./config/connection');
 const userController = require('./controllers/userController');
 const blogController = require('./controllers/blogController');
 const dashboardController = require('./controllers/dashboardController');
+const singlePostController = require('./controllers/singlePostcontroller');
+const { Post, User } = require('./models'); // Add the appropriate require statement for your Post and User models
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -42,6 +44,9 @@ app.use('/api/blog', blogController);
 // Dashboard Routes
 app.use('/api/dashboard', dashboardController);
 
+// Single Post Routes
+app.use('/api/post', singlePostController);
+
 // Test the server
 app.get('/', async (req, res) => {
   try {
@@ -55,6 +60,14 @@ app.get('/', async (req, res) => {
   }
 });
 
+// Route to edit a post
+app.get('/edit/:id', async (req, res) => {
+  try {
+    // Your code to fetch and render the edit page for a specific post goes here
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // Start the server
 sequelize.sync({ force: false }).then(() => {
