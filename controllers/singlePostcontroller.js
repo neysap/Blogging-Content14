@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Post, Comment, User } = require('../models');
+const { Post, Comment, User } = require('../Model');
 
 // Route to view a single blog post and its comments
 router.get('/post/:id', async (req, res) => {

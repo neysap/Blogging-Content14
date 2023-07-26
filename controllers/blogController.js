@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Post, Comment, User } = require('../models');
+const { Post, Comment, User } = require('../Model');
 
 // Homepage route to display all blog posts
 router.get('/', async (req, res) => {

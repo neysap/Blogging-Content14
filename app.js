@@ -1,13 +1,14 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+const { User, Post } = require('./Model');
 const exphbs = require('express-handlebars');
 const sequelize = require('./config/connection');
 const userController = require('./controllers/userController');
 const blogController = require('./controllers/blogController');
 const dashboardController = require('./controllers/dashboardController');
-const singlePostController = require('./controllers/singlePostcontroller');
-const { User, Post } = require('./models');
+const singlePostController = require('./controllers/singlePostController');
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
