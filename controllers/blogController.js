@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Post, Comment, User } = require('../Model');
+const { Post, Comment, User } = require('../models');
 
 // Homepage route to display all blog posts
 router.get('/', async (req, res) => {
@@ -78,25 +78,25 @@ router.post('/comment', async (req, res) => {
   }
 });
 
-router.get('/post/:id', async (req, res) => {
-    try {
-      const post = await Post.findByPk(req.params.id, {
-        include: [
-          { model: User, attributes: ['username'] },
-          { model: Comment, include: [{ model: User, attributes: ['username'] }] },
-        ],
-      });
+// router.get('/post/:id', async (req, res) => {
+//     try {
+//       const post = await Post.findByPk(req.params.id, {
+//         include: [
+//           { model: User, attributes: ['username'] },
+//           { model: Comment, include: [{ model: User, attributes: ['username'] }] },
+//         ],
+//       });
   
-      if (!post) {
-        res.status(404).json({ message: 'No post found with this id' });
-        return;
-      }
+//       if (!post) {
+//         res.status(404).json({ message: 'No post found with this id' });
+//         return;
+//       }
   
-      res.render('post', { loggedIn: req.session.logged_in, post });
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  });
+//       res.render('post', { loggedIn: req.session.logged_in, post });
+//     } catch (err) {
+//       res.status(500).json(err);
+//     }
+//   });
   
   // Route to update a blog post
   router.put('/post/:id', async (req, res) => {
@@ -145,6 +145,31 @@ router.get('/post/:id', async (req, res) => {
       res.status(500).json(err);
     }
   });
+
+  // Route to update a blog post
+router.post('/update-post/:id', async (req, res) => {
+  try {
+    if (!req.session.logged_in) {
+      res.status(403).json({ message: 'You must be logged in to update a post' });
+      return;
+    }
+
+    const { title, content } = req.body;
+    const updatedPost = await Post.update(
+      { title, content },
+      { where: { id: req.params.id, user_id: req.session.user_id } }
+    );
+
+    if (updatedPost[0] === 0) {
+      res.status(404).json({ message: 'No post found with this id or you are not authorized to update this post' });
+      return;
+    }
+
+    res.redirect('/'); // Redirect back to the homepage after successful update
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
   
 
 module.exports = router;

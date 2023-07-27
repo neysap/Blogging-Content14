@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { Post } = require('../Model');
+const { Post } = require('../models');
+
 
 // Route to display the user's dashboard
 router.get('/dashboard', async (req, res) => {
