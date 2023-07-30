@@ -16,8 +16,36 @@
 {{/each}}
 
 {{#if loggedIn}}
-  <form action="/comment" method="POST">
+  <form id="leave-comment-form"></form>
     <textarea name="comment_text" placeholder="Leave a comment..." required></textarea>
     <button type="submit">Submit Comment</button>
   </form>
 {{/if}}
+
+<script>
+ const leaveCommentForm = document.querySelector("#leave-comment-form");
+  leaveCommentForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const comment_text = document.querySelector("#leave-comment-form textarea").value;
+    const post_id = /* Replace with the post id of the current post */;
+
+    fetch("/comment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ comment_text, post_id }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  });
+
+
+</script>

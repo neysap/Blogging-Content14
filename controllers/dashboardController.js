@@ -23,6 +23,20 @@ router.get('/dashboard', async (req, res) => {
   }
 });
 
+router.get('/signup', async (req, res) => {
+
+
+    res.render('signup', {  });
+  
+});
+
+router.get('/signin', async (req, res) => {
+
+
+  res.render('signin', {  });
+
+});
+
 // Route to update a blog post
 router.put('/post/:id', async (req, res) => {
   try {

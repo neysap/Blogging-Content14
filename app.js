@@ -3,14 +3,15 @@ const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const sequelize = require('./config/connection');
-const router = require('express').Router();
+// const router = require('express').Router();
 const controllers = require('./controllers');
 const { User, Post } = require('./models');
 
 
 const app = express();
-const hbs = exphbs.create({});
 const PORT = process.env.PORT || 3001;
+
+const hbs = exphbs.create({});
 
 // Set up Handlebars
 app.engine('handlebars', hbs.engine);
@@ -22,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-// Set up the session with idle session timeout
+// Set up the session with idle session timeout v
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -30,20 +31,17 @@ app.use(session({
   cookie: { maxAge: 1000 * 60 * 15 }, // Set the session to expire after 15 minutes of inactivity
 }));
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(controllers);
-
 // Handlebars helper to check if the user is logged in
 
-// router.use((req, res, next) => {
-//   res.locals.loggedIn = req.session.logged_in;
-//   res.locals.username = req.session.username;
-//   next();
-// });
+app.use((req, res, next) => {
+  res.locals.loggedIn = req.session.logged_in;
+  res.locals.username = req.session.username;
+  next();
+});
   
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(controllers);
 
-  
   // Test the server
   app.get('/', async (req, res) => {
     try {

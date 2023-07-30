@@ -6,6 +6,27 @@
 <p>Title: {{post.title}}</p>
 <p>Content: {{post.content}}</p>
 
-<form action="/api/blog/post/{{post.id}}" method="DELETE">
+<form id="delete-post-form"></form>
   <button type="submit">Delete Post</button>
 </form>
+
+<script>
+  // Function to handle delete blog post form submission
+  const deletePostForm = document.querySelector("#delete-post-form");
+  deletePostForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const postId = /* Replace with the post id of the current post */;
+
+    fetch(`/post/${postId}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  });
+</script>

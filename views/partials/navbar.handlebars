@@ -1,12 +1,12 @@
 <nav>
   <ul>
-    <li><a href="/">Home</a></li>
+    <li><a href="/home">Home</a></li>
     {{#if loggedIn}}
       <li><a href="/dashboard">Dashboard</a></li>
       <li><a href="/logout">Logout</a></li>
     {{else}}
-      <li><a href="/signup">Sign Up</a></li>
-      <li><a href="/signin">Sign In</a></li>
+      <li><a href="/dashboard/signup">Sign Up</a></li>
+      <li><a href="/dashboard/signin">Sign In</a></li>
     {{/if}}
   </ul>
 </nav>

@@ -16,3 +16,31 @@
 {{else}}
   <p>No posts yet!</p>
 {{/if}}
+
+<script>
+
+const newPostForm = document.querySelector("#new-post-form");
+  newPostForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const title = document.querySelector("#title").value;
+    const content = document.querySelector("#content").value;
+
+    fetch("/post", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title, content }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+       
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  });
+
+  </script>

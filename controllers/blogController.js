@@ -78,25 +78,25 @@ router.post('/comment', async (req, res) => {
   }
 });
 
-// router.get('/post/:id', async (req, res) => {
-//     try {
-//       const post = await Post.findByPk(req.params.id, {
-//         include: [
-//           { model: User, attributes: ['username'] },
-//           { model: Comment, include: [{ model: User, attributes: ['username'] }] },
-//         ],
-//       });
+router.get('/post/:id', async (req, res) => {
+    try {
+      const post = await Post.findByPk(req.params.id, {
+        include: [
+          { model: User, attributes: ['username'] },
+          { model: Comment, include: [{ model: User, attributes: ['username'] }] },
+        ],
+      });
   
-//       if (!post) {
-//         res.status(404).json({ message: 'No post found with this id' });
-//         return;
-//       }
+      if (!post) {
+        res.status(404).json({ message: 'No post found with this id' });
+        return;
+      }
   
-//       res.render('post', { loggedIn: req.session.logged_in, post });
-//     } catch (err) {
-//       res.status(500).json(err);
-//     }
-//   });
+      res.render('post', { loggedIn: req.session.logged_in, post });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
   
   // Route to update a blog post
   router.put('/post/:id', async (req, res) => {

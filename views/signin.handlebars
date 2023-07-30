@@ -2,10 +2,33 @@
 
 <h1>Sign In</h1>
 
-<form action="/signin" method="POST">
+<form id="sign-in-form">
   <label for="username">Username:</label>
   <input type="text" id="username" name="username" required>
   <label for="password">Password:</label>
   <input type="password" id="password" name="password" required>
   <button type="submit">Sign In</button>
 </form>
+
+<script>
+  const signInForm = document.querySelector("#sign-in-form")
+  signInForm.addEventListener("submit", (event)=>{
+    event.preventDefault();
+    
+    const username = document.querySelector("#username").value
+    const password = document.querySelector("#password").value
+    fetch("/users/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({username,password})
+    })
+    .then(response=>response.json())
+    .then(data=>{
+      console.log(data);
+      //location.replace("/dashboard")
+    })
+  })
+
+</script>
